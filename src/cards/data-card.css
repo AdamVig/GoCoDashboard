@@ -1,0 +1,34 @@
+.card {
+    font-size: 1rem;
+    margin-bottom: 1.85em; /* Prevent clipped box shadow */
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 22.5rem;
+    /* Prevent element breaking between columns */
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+.small {
+    height: 14.4rem;
+}
+.medium {
+    height: 18rem;
+}
+.large {
+    height: 22rem;
+}
+.small .cardChart {
+    height: 7em;
+}
+.medium .cardChart {
+    height: 9em;
+}
+.large .cardChart {
+    height: 15em;
+}
+/* Fix to make responsive container fill correctly */
+.cardChart > div {
+    height: 100%;
+    width: 100%;
+}

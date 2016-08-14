@@ -1,0 +1,17 @@
+html,
+body,
+:global(#app),
+.appContainer {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+body {
+    background-color: rgb(238, 238, 238);
+}
+.main {
+    column-count: 3;
+    column-width: 19em;
+    font-size: 1rem;
+    padding: 1rem;
+}
