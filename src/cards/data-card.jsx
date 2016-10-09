@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Card, CardMedia, CardTitle } from 'material-ui/Card';
 
 import classes from './data-card.css';
+import Loader from '../components/loader.jsx';
 
 const styles = {
     cardSubtitle: {
@@ -31,21 +32,29 @@ export default class DataCard extends Component {
         ]),
     }
     render() {
-        return (
-            <Card className={`${classes.card} ${classes[this.props.size]}`}>
-              <CardMedia className={classes.cardChart}
-                         style={{backgroundColor: this.props.backgroundColor}}>
-                { this.props.chart }
-              </CardMedia>
-                {
-                  this.props.value &&
-                    <CardTitle title={this.props.value}
-                               subtitle={this.props.description}
-                               titleStyle={styles.cardTitle}
-                               subtitleStyle={styles.cardSubtitle} />
-                }
-              {this.props.children}
-            </Card>
-        );
+        if (this.props.loading) {
+            return (
+                <Card className={`${classes.card} ${classes[this.props.size]}`}>
+                  <Loader />
+                </Card>
+            );
+        } else {
+            return (
+                <Card className={`${classes.card} ${classes[this.props.size]}`}>
+                  <CardMedia className={classes.cardChart}
+                             style={{backgroundColor: this.props.backgroundColor}}>
+                    { this.props.chart }
+                  </CardMedia>
+                  {
+                      this.props.value &&
+                          <CardTitle title={this.props.value}
+                                         subtitle={this.props.description}
+                                         titleStyle={styles.cardTitle}
+                                         subtitleStyle={styles.cardSubtitle} />
+                          }
+                          {this.props.children}
+                </Card>
+            );
+        }
     }
 }
