@@ -2,7 +2,6 @@ import React from 'react';
 
 import colors from '../colors';
 import DataCard from './data-card.jsx';
-import Loader from '../components/loader.jsx';
 import { PieChart } from '../charts/charts';
 import vars from '../vars';
 
@@ -30,6 +29,8 @@ export default class TotalStudents extends DataCard {
                     ],
                     percentage: usersPercentage,
                 });
+            }).catch((error) => {
+                this.setState({error: error});
             });
     }
     render() {
@@ -44,6 +45,8 @@ export default class TotalStudents extends DataCard {
                           size="large"
                           value={this.state.percentage + '%'} />
             );
+        } else if (this.state.error) {
+            return (<DataCard error={this.state.error} />);
         } else {
             return (<DataCard loading={true} />);
         }

@@ -38,6 +38,15 @@ export default class DataCard extends Component {
                   <Loader />
                 </Card>
             );
+        } else if (this.props.error) {
+            return (
+                <Card className={`${classes.card} ${classes[this.props.size]}`}>
+                  <CardTitle title="Error"
+                             subtitle={this.props.error.message}
+                             titleStyle={styles.cardTitle}
+                             subtitleStyle={styles.cardSubtitle} />
+                </Card>
+            );
         } else {
             return (
                 <Card className={`${classes.card} ${classes[this.props.size]}`}>
