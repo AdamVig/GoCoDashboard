@@ -5,8 +5,10 @@ import Chip from 'material-ui/Chip';
 import colors from '../colors';
 import classes from './platforms.css';
 import DataCard from './data-card.jsx';
-import mockData from '../mock-data';
 import { PieChart } from '../charts/charts';
+import vars from '../vars';
+
+const path = '/statistics/platforms';
 
 const styles = {
     chip: {
@@ -22,30 +24,50 @@ const styles = {
 }
 
 export default class Platforms extends DataCard {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+    componentDidMount() {
+        fetch(vars.url + path)
+            .then((response) => response.json())
+            .then((platformUsage) => {
+                const platformUsageData = platformUsage.data.map((platform) => {
+                    platform.value = Math.round(platform.percentage * 100);
+                    return platform;
+                });
+                this.setState({data: platformUsageData});
+            });
+    }
     render() {
-        const chart = (<PieChart data={mockData.platforms.data}
-                       colors={colors.platformsPie}
-                       backgroundColor={colors.platforms}/>);
+        if (this.state.data) {
+            const chart = (<PieChart data={this.state.data}
+                           colors={colors.platformsPie}
+                           backgroundColor={colors.platforms}/>);
 
-        return (
-            <DataCard backgroundColor={colors.platforms}
-                      chart={chart}
-                      size="large">
-              <CardText>
-                <span className={classes.title}>Platforms</span>
-                <div>
-                  {
-                      mockData.platforms.data.map((entry, index) => (
-                          <Chip backgroundColor={colors.platformsPie[index]}
-                                key={entry.name}
-                                labelStyle={styles.chipText}
-                                style={styles.chip}>
-                            {entry.name}
-                          </Chip>))
-                  }
+            return (
+                <DataCard backgroundColor={colors.platforms}
+                          chart={chart}
+                          size="large">
+                  <CardText>
+                    <span className={classes.title}>Platforms</span>
+                    <div>
+                      {
+                          this.state.data.map((entry, index) => (
+                              <Chip backgroundColor={colors.platformsPie[index]}
+                                    key={entry.name}
+                                    labelStyle={styles.chipText}
+                                    style={styles.chip}>
+                                {entry.name}
+                              </Chip>))
+                      }
                 </div>
-              </CardText>
-            </DataCard>
-        );
+                    </CardText>
+                    </DataCard>
+            );
+        } else {
+            return (<DataCard loading={true} />);
+        }
+
     }
 }
