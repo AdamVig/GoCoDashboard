@@ -4,6 +4,7 @@
   "description": "Statistics and management dashboard for GoCo Student.",
   "main": "index.html",
   "scripts": {
+    "build": "webpack",
     "test": "npm run test:syntax",
     "test:components": "karma start --single-run || exit 0",
     "test:components:watch": "karma start || exit 0",
